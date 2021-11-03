@@ -1,3 +1,8 @@
+<?php
+echo "<script>
+    history.forward()
+    </script>";
+   ?>
 <!DOCTYPE HTML>
 <!-- Programa desarrollado (En gran media) por: BlackHope -->
 <html>
@@ -24,6 +29,7 @@
 							<ul>
 								<li><a href="#intro">Acerca de</a></li>	
 								<li><a href="#ini">Iniciar</a></li>
+								<li><a href="#reg">registrarse</a></li>
 							</ul>
 						</nav>
 					</header>
@@ -43,19 +49,42 @@
 						<!-- Inicio: iniciar sesion -->
 							<article id="ini">
 								<h2 class="major">Iniciar sesión</h2>
-								<form method="post" action="#">
+								<form method="post" action="validar_usuarios.php">
 									<div class="fields">
 										<div class="field ">
 											<label for="name">Usuario</label>
-											<input type="text" name="name" id="name" />
+											<input type="text" name="user" id="name" />
 										</div>			
 										<div class="field">
 											<label for="message">Contraseña</label>
-											<input type="password" name="email" id="email" />							
+											<input type="password" name="pass" id="email" />							
 										</div>
 									</div>
 									<ul class="actions">
 										<li><input type="submit" value="Iniciar sesión" class="primary" /></li>									
+									</ul>
+								</form>							
+							</article>
+
+							<article id="reg"> 
+								<h2 class="major">Registrarse</h2>
+								<form method="post" action="registrar.php">
+									<div class="fields">
+										<div class="field ">
+											<label for="name">Nombre</label>
+											<input type="text" name="nombre" id="name" />
+										</div>	
+										<div class="field ">
+											<label for="name">Usuario</label>
+											<input type="text" name="user" id="name" />
+										</div>												
+										<div class="field">
+											<label for="message">Contraseña</label>
+											<input type="password" name="pass" id="email" />							
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="registrarse" class="primary" /></li>									
 									</ul>
 								</form>							
 							</article>

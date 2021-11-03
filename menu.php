@@ -1,3 +1,14 @@
+<?php
+//Arrancamos la sesión
+session_start();
+$_SESSION['user'];
+
+echo "<script>
+    history.forward()
+    </script>";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,17 +48,17 @@
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="menu.html">Bienvenido: </a></h1>
+      <h1 class="logo"><a href="menu.html"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
-          <li><a class="nav-link scrollto" href="">Memorizando</a></li>
+          <li><a class="nav-link scrollto" href="memory_game\memory_game.php">Memorizando</a></li>
           <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <button type="button" class="btn btn-outline-danger">Cerrar Sesión</button>
-      </nav>
+      </nav>  
     </div>
   </header><!-- End Header -->
-
+ 
   <!-- ======= Hero ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="500">
