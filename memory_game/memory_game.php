@@ -1,12 +1,12 @@
 <?php	
 	session_start();
-	
+	include ("conexion.php"); 
 	
 	if ( isset($_REQUEST["won"]) ){
 		unset($_SESSION['board']);
 		$_SESSION['games_won'] = ++$_SESSION['games_won'];
 		$response = array("status" => "ok");
-		exit(json_encode($response));
+		exit(json_encode($response));	
 	}
 	
 	// All the card files we have
@@ -139,8 +139,11 @@
 	}
 
 	$level = 1;
+
+	    
+
 	if (!isset($_SESSION['games_won'])) {
-		$_SESSION['games_won'] = 0;
+		$_SESSION['games_won'] = 0;	
 	}
 	
 	if (isset($_REQUEST['level']) ) {
@@ -156,14 +159,42 @@
 			$board = $_SESSION['board'];
 		}
 	}
+             
+	    $var_user =  $_SESSION['user']; 
+		$var_level = $_REQUEST['level'];
+		$var_games = $_SESSION['games_won'];
+		$var_move = $car;
+	
+		
+	
+
+		$consulta="insert into memoria_score(user, nivel, juegos_finalizados, mov_totales VALUES('$var_user','$var_level','$var_games','$var_move')";
+		echo $consulta;
+        $result=mysqli_query($conn,$consulta);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 <head>
+	
 	<title>Memorizando</title>
 	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 	<link rel="stylesheet" href="memory_game.css" type="text/css" />
+ 
+  <!-- Vendor -->
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+   <!-- CSS  -->
+   <link href="../assets/css/landing_page.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery.metadata.js"></script>
 	<script type="text/javascript" src="jquery.quickflip.js"></script>
@@ -185,16 +216,37 @@
 		print $board->get_css();
 	?>
 </style>
-<body>
-<h3>Simple Memory Game</h3>
-<div id="sfx_movie">
-	<h1>This page requires flash for full funcionality</h1>
-	<p><a href="http://www.adobe.com/go/getflashplayer">
-		<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
-	</a></p>
-</div>
+<body style="background-color:rgba(25, 25, 25, 0.95);">
+
+ <!-- ======= Top  ======= -->
+ <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center"> 
+      </div>
+      <div class="social-links d-none d-md-block"> 
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="menu.html"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
+          <li><a class="nav-link scrollto" href="memory_game\memory_game.php">Memorizando</a></li>
+          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type="button" class="btn btn-outline-danger">Cerrar Sesión</button>
+      </nav>  
+    </div>
+  </header> 
+<div id="sfx_movie"></div><br><br>
+
+<!-- ======= TABLA ======= -->
 <div id="control" style="width:<?php print $board->get_cols()*75; ?>px;">
-	<label>Level:</label>
+	<label class="text-white">Nivel:</label>
 	<select id="level_chooser">
 		<?php 
 			print "<!-- ".$board->max_level()." -->";
@@ -203,25 +255,33 @@
 					print "\r<option value=\"".($i+1)."\"".$selected.">".($i+1)."</option>";
 			}
 		?>
-		
 	</select>
-	<label>Games Finished: </label>
-	<span><?php print $_SESSION["games_won"]; ?></span>
-	<label>Moves:</label>
-	<span id="num_of_moves">0</span>
+	<label class="text-white">victorias: </label>
+	<span class="text-white"><?php print $_SESSION["games_won"]; ?></span>
+	<label class="text-white">Movimientos:</label>
+	<span class="text-white" id="num_of_moves">0</span>
+
 </div>
 <div id="game_board" style="width:<?php print $board->get_cols()*75; ?>px;">
 <?php
 	print $board->get_html();
 ?>
+
+<script>
+function myJavascriptFunction() { 
+  var javascriptVariable = "John";
+  window.location.href = "memory_game.php?name=" + javascriptVariable; 
+}
+</script> 
+
+<!-- ======= Victoria ======= -->
 </div>
 <div id="player_won"></div>
-<div id="start_again"><a id="again" href="#">Click here to play again</a></div>
-<div id="sfx_movie">
-	<h1>This page requires flash for full funcionality</h1>
-	<p><a href="http://www.adobe.com/go/getflashplayer">
-		<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
-	</a></p>
-</div>
+
+<div  id="start_again"><a id="again" href="#">volver a jugar</a></div>
+<div id="sfx_movie"> </div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>
+

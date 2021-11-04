@@ -7,14 +7,14 @@
 .card div.off{
 	height: 67px;
 	width: 67px;
-	background: #fff url(images/card.png) no-repeat center center;
+	background: rgb(59, 56, 56) url(images/card.png) no-repeat center center;
 }
 .card_ph{
 	float: left;
 	height: 67px;
 	width: 67px;
-	background: #fff;
-	border: 1px solid #fff;
+	background: rgb(121, 121, 121);
+	border: 1px solid rgb(117, 117, 117);
 }
 
 .on{
@@ -70,3 +70,5 @@ h3{
 	width: 1px;
 	height: 1px;
 }
+
+.heading { color: #ffffff; }
