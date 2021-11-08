@@ -2,14 +2,21 @@
 	session_start();
 	include ("conexion.php"); 
 	
-	if ( isset($_REQUEST["won"]) ){
+	if ( isset($_REQUEST["won"]) ){	
 		unset($_SESSION['board']);
-		$_SESSION['games_won'] = ++$_SESSION['games_won'];
-		$response = array("status" => "ok");
-		exit(json_encode($response));	
+		$_SESSION['games_won'] = ++$_SESSION['games_won'];	
+		$var_user =  $_SESSION['user']; 
+     	$var_level = $_REQUEST['level'];
+    	$var_games = $_SESSION['games_won'];
+		
+	    $consulta="insert into memoria_score(user, nivel, juegos_finalizados) VALUES('$var_user','$var_level','$var_games')";
+     	$result=mysqli_query($conn,$consulta);
+		
+		$response = array("status" => "ok");		
+		exit(json_encode($response));		
 	}
+
 	
-	// All the card files we have
 	$CARDS = array("images/image0001.png",
 					"images/image0002.png","images/image0003.png",
 					"images/image0004.png","images/image0005.png",
@@ -140,14 +147,15 @@
 
 	$level = 1;
 
-	    
+	
 
 	if (!isset($_SESSION['games_won'])) {
+
 		$_SESSION['games_won'] = 0;	
 	}
 	
 	if (isset($_REQUEST['level']) ) {
-		$level = $_REQUEST['level'];
+		$level = $_REQUEST['level']; 
 		
 		$board = new Board($level, $CARDS);
 		$_SESSION['board'] = $board;
@@ -159,19 +167,8 @@
 			$board = $_SESSION['board'];
 		}
 	}
-             
-	    $var_user =  $_SESSION['user']; 
-		$var_level = $_REQUEST['level'];
-		$var_games = $_SESSION['games_won'];
-		$var_move = $car;
 	
-		
-	
-
-		$consulta="insert into memoria_score(user, nivel, juegos_finalizados, mov_totales VALUES('$var_user','$var_level','$var_games','$var_move')";
-		echo $consulta;
-        $result=mysqli_query($conn,$consulta);
-
+	   
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -235,10 +232,10 @@
       <h1 class="logo"><a href="menu.html"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
-          <li><a class="nav-link scrollto" href="memory_game\memory_game.php">Memorizando</a></li>
+          <li><a class="nav-link scrollto " href="/menu.php">Pagina principal</a></li> 
+          <li><a class="nav-link scrollto active" href="memory_game\memory_game.php">Memorizando</a></li>
           <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type="button" class="btn btn-outline-danger">Cerrar Sesión</button>
+          <button type="button"  class="btn btn-outline-danger">Cerrar Sesión</button>
       </nav>  
     </div>
   </header> 
@@ -259,27 +256,59 @@
 	<label class="text-white">victorias: </label>
 	<span class="text-white"><?php print $_SESSION["games_won"]; ?></span>
 	<label class="text-white">Movimientos:</label>
-	<span class="text-white" id="num_of_moves">0</span>
+	<span class="text-white" id="num_of_moves">0</span> 
 
-</div>
+</div> <br/>
 <div id="game_board" style="width:<?php print $board->get_cols()*75; ?>px;">
 <?php
 	print $board->get_html();
+	
 ?>
 
-<script>
-function myJavascriptFunction() { 
-  var javascriptVariable = "John";
-  window.location.href = "memory_game.php?name=" + javascriptVariable; 
-}
-</script> 
 
 <!-- ======= Victoria ======= -->
 </div>
 <div id="player_won"></div>
-
-<div  id="start_again"><a id="again" href="#">volver a jugar</a></div>
+<div  id="start_again"><a id="again" href="#">volver a jugar</a>
+</div>
 <div id="sfx_movie"> </div>
+
+<div class="container">
+<h2 class="text-center text-light">Puntuación personal</h2> <br/>
+<div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-light">
+                        <th>
+                          Usuario
+                        </th>
+                        <th>
+                          Nivel
+                        </th>
+                        <th>
+                          Juegos finalizados
+                        </th>             
+                        <th>
+                          ACCIONES
+                        </th>
+                      </thead>
+                      <tbody class= "text-light">
+                      <?php 
+					     $var_usuario = $_SESSION['user']; 
+                         include ("conexion.php");
+                         $consulta="SELECT * FROM memoria_score where user='$var_usuario'";
+                         $result=mysqli_query($conn,$consulta);
+                          while($fila=$result->fetch_assoc()){
+                            echo "<tr>";                          
+                            echo "<td>"; echo $fila['user']; echo"</td>";
+                            echo "<td>"; echo $fila['nivel']; echo"</td>";
+                            echo "<td>"; echo $fila['juegos_finalizados']; echo"</td>";
+                            echo "<td>"; echo"<a href='./eliminar.php?data=".$fila['idmemoria_score']."'> <buttontype='button' class='btn btn-danger'>borrar score</button>"; echo"</td>";                                 
+                            echo "</tr>";
+                           }
+                         ?>
+                      </tbody>
+                    </table>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>

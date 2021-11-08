@@ -53,10 +53,16 @@ echo "<script>
         <ul>
           <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
           <li><a class="nav-link scrollto" href="memory_game\memory_game.php">Memorizando</a></li>
-          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type="button" class="btn btn-outline-danger">Cerrar Sesión</button>
+          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>
+        
       </nav>  
-    </div>
+      
+    <a href="logout.php">
+          <button type="button" class="btn btn-outline-danger btn-lg btn3d"><span ></span> Cerrar sesión</button>
+    </a>
+      
+    </div> 
+
   </header><!-- End Header -->
  
   <!-- ======= Hero ======= -->

@@ -1,5 +1,5 @@
 var chk_cards_timeout = null;
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 $(document).ready(function(){
 	$(".card").bind("click", toggleCard);
 	$(".card").quickFlip();
@@ -12,7 +12,6 @@ $(document).ready(function(){
 	$("#start_again").bind("click", reload);
 	
 	$("#level_chooser").bind("change", levelChoosen);
-	
 	
 	// Add some sounds
 	$(document).bind("flipping_cards.sound", playFlip);
@@ -135,8 +134,6 @@ function moveMade(){
 	++num_of_moves;
 	$moves_tracker.data("moves", num_of_moves).text(num_of_moves);
 	$moves_tracker = null;
-
-
 };
 
 function getFlashMovieObject(movieName){
