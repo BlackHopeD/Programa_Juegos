@@ -3,9 +3,7 @@
 session_start();
 $_SESSION['user'];
 
-echo "<script>
-    history.forward()
-    </script>";
+
 
 ?>
 
@@ -48,7 +46,7 @@ echo "<script>
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="menu.html"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
+      <h1 class="logo"><a href="menu.php"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
@@ -60,7 +58,7 @@ echo "<script>
     <a href="logout.php">
           <button type="button" class="btn btn-outline-danger btn-lg btn3d"><span ></span> Cerrar sesión</button>
     </a>
-      
+       
     </div> 
 
   </header><!-- End Header -->
@@ -71,11 +69,9 @@ echo "<script>
         
       <h1>Juegos disponibles:</h1>
       <h2>Presione uno de los botones para elegir un juego</h2>
-      <div class="text-center ">
-        <img src="..." class="rounded" alt="...">
-        </div>
-      <a href="" class="btn-get-started scrollto">Memorizando</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-      <a href="" class="btn-get-started scrollto">Camino sin fin</a>
+      
+      <a href="memory_game/memory_game.php" class="btn-get-started scrollto">Memorizando</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      <a href="camino.php" class="btn-get-started scrollto">Camino sin fin</a>
     </div>
   </section><!--  Hero -->
 

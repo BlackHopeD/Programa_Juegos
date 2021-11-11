@@ -2,5 +2,5 @@
     $host = "localhost";
     $dbname = "juegos";
     $username = "root";
-    $password = "";  
+    $password = "";  // <!-- ======= PDO ======= -->
 ?>

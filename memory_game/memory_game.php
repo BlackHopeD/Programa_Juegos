@@ -31,32 +31,32 @@
 	
 	class Board
 	{
-		private $css = array();
-		private $cards = array();
+		private $css = array();  //imagenes para las cartas 
+		private $cards = array();  // almacenar las cartas
 		private $cards_names = array();
 		private $cols = 0;
 		private $rows = 0;
-		private $modes = array(6, 8, 10, 12, 15, 18);
+		private $modes = array(6, 8, 10, 12, 15, 18); //Dificultades 
 		
 		function __construct($level, $card_files) {
 			$num_of_cards = $this->modes[$level - 1];
 			
-			// Shuffle the cards available so we won't pick the 
-			// same ones every time
+			// Cambiar posicion de cartas 
+			// 
 			shuffle($card_files);
-			// Get the card objects
+			// burbuja: Arreglar las cartas
 			$cards = array();
 			for ( $i = 0; $i < $num_of_cards; ++$i ){
 				$cards[$i] = new Card($card_files[$i]);
 				$this->css[] = $cards[$i]->get_css_block();
 			}
-			// Double the array so we will have pairs
+			// Doblar el arreglo para tener un par en caso de aumentar la dificultad
 			$this->cards = array_merge($cards, $cards);
 			
-			// Shuffle the cards to create the order on the board
+			// Cambiar posicion en caso de que intente transposicionarse
 			shuffle($this->cards);
 			
-			// Get the number of cols
+			// Obtener: Columnas 
 			$num = count($this->cards);
 			$sr = sqrt($num);
 			$this->rows = floor($sr);
@@ -101,9 +101,9 @@
 		}
 		
 		function get_html(){
-			// For each card
+			// 4 each cartas
 			for ( $i = 0 ; $i < $this->get_size() ; ++$i ){
-				// Check if it's time for a new row
+				
 				if ( ($i % $this->get_cols()) == 0 ){
 					print "\r<div class=\"clear\"></div>";
 				}
@@ -149,12 +149,12 @@
 
 	
 
-	if (!isset($_SESSION['games_won'])) {
+	if (!isset($_SESSION['games_won'])) {  //Sesion aumenta +1 si gana
 
 		$_SESSION['games_won'] = 0;	
 	}
 	
-	if (isset($_REQUEST['level']) ) {
+	if (isset($_REQUEST['level']) ) {  //Obtenida de js 
 		$level = $_REQUEST['level']; 
 		
 		$board = new Board($level, $CARDS);
@@ -191,13 +191,13 @@
    <link href="../assets/css/landing_page.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-
+   <!-- script -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery.metadata.js"></script>
 	<script type="text/javascript" src="jquery.quickflip.js"></script>
 	<script type="text/javascript" src="memory_game.js"></script>
 	<script type="text/javascript" src="swfobject.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
 	var flashvars = false;
 	var attributes = {};
 	var params = {
@@ -206,9 +206,10 @@
 	  menu: "false"
 	};
 	swfobject.embedSWF("sfx.swf", "sfx_movie", "1", "1", "9.0.0", "expressInstall.swf", flashvars, params, attributes);
-</script>
+   </script>
 </head>
 <style>
+
 	<?php 
 		print $board->get_css();
 	?>
@@ -225,25 +226,26 @@
     </div>
   </section>
 
+
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="/menu.php"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
+      <h1 class="logo"><a href="../menu.php"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="/menu.php">Pagina principal</a></li> 
+          <li><a class="nav-link scrollto " href="../menu.php">Pagina principal</a></li> 
           <li><a class="nav-link scrollto active" href="memory_game.php">Memorizando</a></li>
-          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>
+          <li><a class="nav-link scrollto" href="../camino.php">Camino Sin fin</a></li>
         
       </nav>  
 	  <a href="logout.php">
           <button type="button" class="btn btn-outline-danger btn-lg btn3d"><span ></span> Cerrar sesión</button>
     </a>
     </div>
-	
   </header> 
 <div id="sfx_movie"></div><br><br>
+
 
 <!-- ======= TABLA ======= -->
 <div id="control" style="width:<?php print $board->get_cols()*75; ?>px;">
@@ -277,6 +279,8 @@
 </div>
 <div id="sfx_movie"> </div>
 
+
+<!-- ======= Score ======= -->
 <div class="container">
 <h2 class="text-center text-light">Puntuación personal</h2> <br/>
 <div class="table-responsive">

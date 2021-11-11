@@ -3,7 +3,7 @@
 session_start();
 $_SESSION['user'];
 
-if (session_destroy()) {
+if (session_destroy()) { //Destruir sesion
 echo "<script>
     window.location = '/index.php';
     history.forward()

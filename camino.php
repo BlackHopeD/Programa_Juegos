@@ -1,3 +1,8 @@
+
+   <?php
+    session_start();
+	include ("conexion.php");  	?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,9 +22,9 @@
   <!-- CSS  -->
   <link href="assets/css/landing_page.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-
-    <style>
+<style>
 
 * {
     padding: 0;
@@ -178,37 +183,35 @@ body{
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="menu.html"> Bienvenido/a:   <?php //echo $_SESSION['user']; ?> </a></h1>
+      <h1 class="logo"><a href="menu.php"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
+          <li><a class="nav-link scrollto " href="menu.php">Pagina principal</a></li> 
           <li><a class="nav-link scrollto" href="memory_game/memory_game.php">Memorizando</a></li>
-          <li><a class="nav-link scrollto" href="camino.php">Camino Sin fin</a></li>
-        
-      </nav>  
-      
-    <a href="logout.php">
-          <button type="button" class="btn btn-outline-danger btn-lg btn3d"><span ></span> Cerrar sesión</button>
-    </a>
-      
+          <li><a class="nav-link scrollto active" href="camino.php">Camino Sin fin</a></li>
+      </nav>     
+
+      <a href="logout.php"><button type="button" class="btn btn-outline-danger btn-lg btn3d"><span ></span> Cerrar sesión</button></a>    
     </div> <br/>
+   </header><br/><br/><br/><br/><br/><br/>
 
-  </header><!-- End Header --> <br/><br/><br/><br/><br/><br/>
+  
 
-<body>
-<form action="camino.php" method="POST">
+
+
+  <!-- ======= Top  ======= -->
+  <body>
+   <form action="camino.php" id="formulario" method="POST" name="formulario" onsubmit="onAceptar()">
     <div class="contenedor">
-      <div class="suelo"></div>
-        <div class="dino dino-corriendo"></div>
-         <div class="score" id="data">0</div>
-           
-      </div>
-    <div class="game-over">Juego finalizado<br/><br/>
-       <button type="submit" class="btn btn-success btn-lg">Volver a comenzar</button>
-    </div>
-    </form>
-   
-    
+    <div class="suelo"></div>
+    <div class="dino dino-corriendo"></div>
+    <div class="score"  name="variable">0</div> </div>
+
+       <input id="variable" name="variable" type="hidden" />
+        <div class="game-over">Juego finalizado<br/><br/>
+         <button type="submit"  id="aceptar" class="btn btn-success btn-lg">Volver a comenzar</button> </div>
+    </form> 
+ 
 <script>
 
 //****** GAME LOOP ********//
@@ -273,6 +276,9 @@ var textoScore;
 var suelo;
 var gameOver;
 
+
+
+
 function Start() {
     gameOver = document.querySelector(".game-over");
     suelo = document.querySelector(".suelo");
@@ -280,7 +286,7 @@ function Start() {
     textoScore = document.querySelector(".score");
     dino = document.querySelector(".dino");
     document.addEventListener("keydown", HandleKeyDown);
-   
+
 
 }
 
@@ -414,13 +420,13 @@ function GanarPuntos() { //Funcion para cambiar
     score++;
     textoScore.innerText = score;
     if(score == 5){
-        gameVel = 1.5;
+        gameVel = 1;
         contenedor.classList.add("mediodia");
-    }else if(score == 10) {
-        gameVel = 2;
+    }else if(score == 15) {
+        gameVel = 1.5;
         contenedor.classList.add("tarde");
-    } else if(score == 20) {
-        gameVel = 3;
+    } else if(score == 50) {
+        gameVel = 2.1;
         contenedor.classList.add("noche");
     }
     suelo.style.animationDuration = (3/gameVel)+"s";
@@ -458,6 +464,8 @@ function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft)
         (aRect.left + paddingLeft > (bRect.left + bRect.width))
     );
 }
+
+
 
 
 </script>
