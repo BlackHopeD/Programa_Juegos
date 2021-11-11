@@ -52,8 +52,8 @@ echo "<script>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="menu.html">Pagina principal</a></li>
-          <li><a class="nav-link scrollto" href="memory_game\memory_game.php">Memorizando</a></li>
-          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>
+          <li><a class="nav-link scrollto" href="memory_game/memory_game.php">Memorizando</a></li>
+          <li><a class="nav-link scrollto" href="camino.php">Camino Sin fin</a></li>
         
       </nav>  
       

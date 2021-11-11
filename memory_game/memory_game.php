@@ -229,15 +229,19 @@
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="menu.html"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
+      <h1 class="logo"><a href="/menu.php"> Bienvenido/a:   <?php echo $_SESSION['user']; ?> </a></h1>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto " href="/menu.php">Pagina principal</a></li> 
-          <li><a class="nav-link scrollto active" href="memory_game\memory_game.php">Memorizando</a></li>
-          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type="button"  class="btn btn-outline-danger">Cerrar Sesión</button>
+          <li><a class="nav-link scrollto active" href="memory_game.php">Memorizando</a></li>
+          <li><a class="nav-link scrollto" href="">Camino Sin fin</a></li>
+        
       </nav>  
+	  <a href="logout.php">
+          <button type="button" class="btn btn-outline-danger btn-lg btn3d"><span ></span> Cerrar sesión</button>
+    </a>
     </div>
+	
   </header> 
 <div id="sfx_movie"></div><br><br>
 
